@@ -68,7 +68,8 @@ library.add(fas, far, fab);
       AppComponent
    ],
    entryComponents: [
-      NavigationDialogComponent
+      NavigationDialogComponent,
+      ContactComponent
    ]
 })
 export class AppModule { }

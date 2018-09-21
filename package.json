@@ -1,5 +1,5 @@
 {
-  "name": "quotation-system-app",
+  "name": "contact-app",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -29,6 +29,7 @@
     "@fortawesome/free-regular-svg-icons": "^5.2.0",
     "@fortawesome/free-solid-svg-icons": "^5.2.0",
     "core-js": "^2.5.4",
+    "material-design-icons": "^3.0.1",
     "rxjs": "^6.0.0",
     "underscore": "^1.9.1",
     "zone.js": "~0.8.26"

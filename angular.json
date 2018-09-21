@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "quotation-system-app": {
+    "contact-app": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -13,7 +13,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/quotation-system-app",
+            "outputPath": "dist/contact-app",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -53,18 +53,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "quotation-system-app:build"
+            "browserTarget": "contact-app:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "quotation-system-app:build:production"
+              "browserTarget": "contact-app:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "quotation-system-app:build"
+            "browserTarget": "contact-app:build"
           }
         },
         "test": {
@@ -101,7 +101,7 @@
         }
       }
     },
-    "quotation-system-app-e2e": {
+    "contact-app-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "architect": {
@@ -109,11 +109,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "quotation-system-app:serve"
+            "devServerTarget": "contact-app:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "quotation-system-app:serve:production"
+              "devServerTarget": "contact-app:serve:production"
             }
           }
         },
@@ -129,5 +129,5 @@
       }
     }
   },
-  "defaultProject": "quotation-system-app"
+  "defaultProject": "contact-app"
 }

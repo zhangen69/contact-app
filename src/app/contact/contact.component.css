@@ -1,0 +1,52 @@
+mat-card {
+    padding: 0;
+}
+
+.form {
+    display: flex;
+    flex-direction: row;
+}
+
+.icon-group {
+    width: 100px;
+    display: flex;
+    flex-direction: column;
+}
+
+.icon-group > mat-icon {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70px;
+}
+
+.icon-group > mat-icon.profile {
+    font-size: 3rem;
+}
+
+.form .row {
+    display: flex;
+    flex-wrap: wrap;
+    width: calc(100% - 175px);
+}
+
+.form .row > mat-form-field {
+    flex: 0 0 calc(50% - 10px);
+    margin: 5px;
+}
+
+.form .row > mat-form-field.w-100 {
+    flex: 0 0 100%;
+}
+
+.icon-btn-group {
+    position: absolute;
+    right: -80px;
+    top: 0;
+}
+
+mat-card-actions {
+    margin: 0;
+    padding: 8px !important;
+}

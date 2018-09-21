@@ -1,3 +1,84 @@
-<p>
-  contact works!
-</p>
+<mat-card>
+    <mat-card-header class="back-color-default" color="primary">
+        <mat-card-title>
+          <h3>Create Contact</h3>
+        </mat-card-title>
+        <!-- <mat-card-subtitle>Subtitle</mat-card-subtitle> -->
+    </mat-card-header>
+    <!-- <img matCardImage src="Card wide image source"> -->
+    <mat-card-content>
+      <form class="form">
+        <div class="icon-group">
+          <mat-icon class="profile">account_circle</mat-icon>
+          <mat-icon>domain</mat-icon>
+          <mat-icon>email</mat-icon>
+          <mat-icon>phone</mat-icon>
+          <mat-icon>insert_drive_file</mat-icon>
+        </div>
+        <div class="row">
+          <mat-form-field>
+            <input matInput placeholder="First Name">
+          </mat-form-field>
+          
+          <mat-form-field>
+            <input matInput placeholder="Last Name">
+          </mat-form-field>
+  
+          <mat-form-field>
+            <input matInput placeholder="Company">
+          </mat-form-field>
+  
+          <mat-form-field>
+            <input matInput placeholder="Job title">
+          </mat-form-field>
+  
+          <mat-form-field>
+            <input matInput placeholder="Email">
+          </mat-form-field>
+  
+          <mat-form-field>
+            <input matInput placeholder="Label">
+
+            <div class="icon-btn-group">
+                <button class="icon-btn color-default" mat-icon-button (click)="cancel()">
+                  <mat-icon>cancel</mat-icon>
+                </button>
+                <button class="icon-btn" mat-icon-button color="primary" (click)="cancel()">
+                  <mat-icon>add_circle  </mat-icon>
+                </button>
+            </div>
+          </mat-form-field>
+  
+          <mat-form-field>
+            <input matInput placeholder="Phone">
+          </mat-form-field>
+  
+          <mat-form-field>
+            <input matInput placeholder="Label">
+            
+            <div class="icon-btn-group">
+                <button class="icon-btn color-default" mat-icon-button (click)="cancel()">
+                  <mat-icon>cancel</mat-icon>
+                </button>
+                <button class="icon-btn" mat-icon-button color="primary" (click)="cancel()">
+                  <mat-icon>add_circle</mat-icon>
+                </button>
+            </div>
+          </mat-form-field>
+  
+          <mat-form-field class="w-100">
+            <textarea matInput placeholder="Notes"></textarea>
+          </mat-form-field>
+        </div>
+      </form>
+        
+    </mat-card-content>
+    <mat-card-actions align="end">
+        <button mat-button (click)="cancel()">CANCEL</button>
+        <button mat-raised-button color="primary" (click)="submit()">SAVE</button>
+        
+    </mat-card-actions>
+    <!-- <mat-card-footer>
+        Footer
+    </mat-card-footer> -->
+</mat-card>

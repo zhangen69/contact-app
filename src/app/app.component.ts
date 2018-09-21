@@ -3,10 +3,11 @@ import { timer } from 'rxjs';
 import { MediaMatcher, BreakpointObserver, BreakpointState } from '../../node_modules/@angular/cdk/layout';
 import { Router, NavigationEnd } from '../../node_modules/@angular/router';
 import { _ } from 'underscore';
-import { MatSidenav } from '../../node_modules/@angular/material';
+import { MatSidenav, MatDialog } from '../../node_modules/@angular/material';
 import { NavigationDialogComponent } from './templates/navigation-dialog/navigation-dialog.component';
 import { LoadingPageService } from './services/loading-page/loading-page.service';
 import { PageHistoryService } from './services/page-history/page-history.service';
+import { ContactComponent } from './contact/contact.component';
 
 @Component({
   selector: 'app-root',
@@ -28,7 +29,7 @@ export class AppComponent implements OnInit, OnDestroy {
   ];
 
   // tslint:disable-next-line:max-line-length
-  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher, public router: Router, public breakpointObserver: BreakpointObserver, public loadingPageService: LoadingPageService, private pageHistoryService: PageHistoryService) {}
+  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher, public router: Router, public breakpointObserver: BreakpointObserver, public loadingPageService: LoadingPageService, private pageHistoryService: PageHistoryService, public dialog: MatDialog) {}
 
   ngOnInit() {
     this.loadingPageService.refresh();
@@ -101,6 +102,18 @@ export class AppComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
+    });
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(ContactComponent, {
+      width: '700px',
+      data: {name: 'this.name', animal: 'this.animal'}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      console.log(result);
     });
   }
 }
