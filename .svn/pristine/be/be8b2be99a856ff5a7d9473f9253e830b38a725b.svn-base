@@ -1,0 +1,22 @@
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+import { HomeComponent } from './home/home.component';
+
+const routes: Routes = [
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: 'home', component: HomeComponent, data: { breadcrumb: 'Home' } },
+  { path: 'quotation', component: HomeComponent, children: [
+    { path: '', redirectTo: '/quotation/list', pathMatch: 'full' },
+    { path: 'list', component: HomeComponent, data: { breadcrumb: 'List' } },
+    { path: 'list/confirmed', component: HomeComponent, data: { breadcrumb: 'Confirmed List' } },
+    { path: 'list/rejected', component: HomeComponent, data: { breadcrumb: 'Rejected List' } },
+    { path: 'new', component: HomeComponent, data: { breadcrumb: 'New' } },
+    { path: 'edit', component: HomeComponent, data: { breadcrumb: 'Edit' } },
+  ], data: { breadcrumb: 'Quotation' }},
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }

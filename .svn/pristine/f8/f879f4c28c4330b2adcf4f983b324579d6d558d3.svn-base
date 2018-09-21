@@ -1,0 +1,16 @@
+.form-group {
+    margin-bottom: 10px;
+}
+
+.form-group > .ng-fa-icon {
+    color: #888;
+    padding: 0 15px;
+}
+
+.mat-card-actions {
+    border-top: 1px solid #ccc;
+}
+
+.form-group .w-100 {
+    width: calc(100% - 47.5px);
+}

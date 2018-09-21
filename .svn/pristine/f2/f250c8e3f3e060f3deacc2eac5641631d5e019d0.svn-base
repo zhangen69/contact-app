@@ -1,0 +1,38 @@
+import { IQuotation } from './IQuotation';
+import { IMinimumOrderQuantityItem } from './IMinimumOrderQuantityItem';
+import { IItem } from './IItem';
+import { IQuality } from './IQuality';
+import { IColour } from './IColour';
+import { IFinishing } from './IFinishing';
+import { EQuotationItemStatus } from '../enums/EQuotationItemStatus.enum';
+
+export interface IQuotationItem {
+  quotationId: number;
+  quotation: IQuotation;
+
+  meansurementWidth: string;
+  meansurementLength: string;
+
+  minimumOrderQuantityItems: Array<IMinimumOrderQuantityItem>;
+
+  itemName: string;
+  itemId: number;
+  item: IItem;
+
+  qualityName: string;
+  qualityId: number;
+  quality: IQuality;
+
+  colourName: string;
+  colourId: number;
+  colour: IColour;
+
+  finishingName: string;
+  finishingId: number;
+  finishing: IFinishing;
+
+  remark: string;
+
+  status: EQuotationItemStatus;
+  lastActionDate: Date;
+}

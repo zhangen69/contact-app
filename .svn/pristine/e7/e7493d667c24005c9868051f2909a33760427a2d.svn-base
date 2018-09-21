@@ -1,0 +1,27 @@
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl } from '../../../../node_modules/@angular/forms';
+
+@Component({
+  selector: 'app-quotation-form',
+  templateUrl: './quotation-form.component.html',
+  styleUrls: ['./quotation-form.component.css']
+})
+export class QuotationFormComponent implements OnInit {
+  formData = new FormGroup({
+    customer: new FormControl(''),
+    term:  new FormControl(''),
+    revised:  new FormControl(''),
+    status:  new FormControl(''),
+    // quotation item(s) => { measurement width, measurement length, item, quality, colour, finishing, remark, moq item(s) => { MOQ, unit price } }
+  });
+
+  constructor() { }
+
+  ngOnInit() {
+  }
+
+  onSubmit() {
+    console.log('form submitting...');
+  }
+
+}

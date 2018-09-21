@@ -1,0 +1,5 @@
+<ul class="breadcrumbs" fxLayout="row">
+  <li class="breadcrumb" fxLayoutAlign="center center" *ngFor="let breadcrumb of breadcrumbs">
+    <a [routerLink]="[breadcrumb.url, breadcrumb.params]">{{ breadcrumb.label }}</a>
+  </li>
+</ul>

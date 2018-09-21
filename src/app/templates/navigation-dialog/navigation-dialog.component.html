@@ -1,0 +1,15 @@
+<div class="header" fxLayout="row">
+  <h3>Please select one navigation:</h3>
+  <button mat-fab class="btn btn-icon" (click)="closeDialog()">
+    <fa-icon icon="times" size="2x" [fixedWidth]="true"></fa-icon>
+  </button>
+</div>
+<ul class="navigation-links">
+  <li *ngFor="let link of data.links">
+    <!-- <span>{{ link | json }}</span> -->
+    <span fxFlex>{{link.displayName}}</span>
+    <button class="btn btn-icon" (click)="navigateTo(link)">
+      <fa-icon icon="angle-right" size="2x" [fixedWidth]="true"></fa-icon>
+    </button>
+  </li>
+</ul>

@@ -1,0 +1,106 @@
+<mat-toolbar>
+  <mat-toolbar-row class="filter-options-group" fxLayout="row wrap">
+    <mat-form-field class="filter-option-input">
+      <input matInput placeholder="Enter keyword" [(ngModel)]="searchText" (keypress)="addFilterByKeyPress($event)">
+    </mat-form-field>
+
+    <mat-form-field class="filter-option-select">
+      <mat-select placeholder="Filter Options" [(ngModel)]="selectedFilterOption">
+        <mat-option *ngFor="let option of filterOptions" [value]="option">{{option.displayName}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <button mat-raised-button type="button" class="filter-option-button">Search</button>
+
+    <button mat-icon-button type="button" class="filter-option-button btn-icon-plus" [disabled]="!searchText || !selectedFilterOption" (click)="addFilter()">
+      <fa-icon icon="plus" [fixedWidth]="true"></fa-icon>
+    </button>
+    <button mat-icon-button type="button" class="filter-option-button btn-icon-trash" *ngIf="multipleFilters.length > 0" (click)="clearMultipleFilters()">
+      <fa-icon icon="trash" [fixedWidth]="true"></fa-icon>
+    </button>
+
+    <div fxFlex fxLayoutAlign="end">
+      <button mat-raised-button type="button" class="filter-option-button btn-icon-refresh">
+        Refresh <fa-icon icon="sync-alt" [fixedWidth]="true"></fa-icon>
+      </button>
+    </div>
+  </mat-toolbar-row>
+
+  <mat-toolbar-row class="filter-search-option-group" *ngIf="multipleFilters.length > 0">
+    <button mat-flat-button class="filter-search-option" *ngFor="let filter of multipleFilters" (click)="removeFilter(filter)">{{filter.displayName}}: {{filter.queryText}} <fa-icon icon="times" [fixedWidth]="true"></fa-icon></button>
+  </mat-toolbar-row>
+
+  <mat-toolbar-row>
+    <div class="toolbar-btn-group" fxFlex fxLayoutAlign="end">
+      <button mat-stroked-button class="btn btn-action" *ngFor="let action of actions" [fxShow]="action.show()" (click)="action.onClick()" [ngStyle]="{'color': action.color}">
+        <fa-icon icon="{{action.icon}}" [fixedWidth]="true" *ngIf="!!action.icon"></fa-icon> {{action.displayName}}
+      </button>
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+  <!--- Note that these columns can be defined in any order.
+        The actual rendered columns are set as a property on the row definition" -->
+
+  <ng-container matColumnDef="selected">
+    <th mat-header-cell *matHeaderCellDef> 
+      <mat-checkbox color="primary" [(ngModel)]="selectedAll" (change)="toggleAll()"></mat-checkbox>
+    </th>
+    <td mat-cell *matCellDef="let element">
+      <mat-checkbox color="primary" [(ngModel)]="element.selected" (change)="selectedItem(element, $event)"></mat-checkbox>
+    </td>
+  </ng-container>
+
+  <!-- Position Column -->
+  <ng-container matColumnDef="documentId">
+    <th mat-header-cell *matHeaderCellDef> Quotation </th>
+    <td mat-cell *matCellDef="let element"> {{element.documentId}} </td>
+  </ng-container>
+
+  <!-- Name Column -->
+  <ng-container matColumnDef="customer.name">
+    <th mat-header-cell *matHeaderCellDef> To </th>
+    <td mat-cell *matCellDef="let element"> {{element.customer.name}} </td>
+  </ng-container>
+
+  <!-- Weight Column -->
+  <ng-container matColumnDef="customer.personInCharge.name">
+    <th mat-header-cell *matHeaderCellDef> Attention </th>
+    <td mat-cell *matCellDef="let element"> {{element.customer.personInCharge.name}} </td>
+  </ng-container>
+
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="customer.personInCharge.phone">
+    <th mat-header-cell *matHeaderCellDef> Phone </th>
+    <td mat-cell *matCellDef="let element"> {{element.customer.personInCharge.phone}} </td>
+  </ng-container>
+  
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="customer.personInCharge.email">
+    <th mat-header-cell *matHeaderCellDef> Email </th>
+    <td mat-cell *matCellDef="let element"> {{element.customer.personInCharge.email}} </td>
+  </ng-container>
+
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="status">
+      <th mat-header-cell *matHeaderCellDef> Status </th>
+      <td mat-cell *matCellDef="let element"> {{element.status | getEnumName: quotationStatusList}} </td>
+    </ng-container>
+  
+
+  <!-- Symbol Column -->
+  <ng-container matColumnDef="audit">
+      <th mat-header-cell *matHeaderCellDef> Last Updated </th>
+      <td mat-cell *matCellDef="let element"> {{element.audit | getAudit}} </td>
+    </ng-container>
+  
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+<mat-paginator [length]="100"
+              [pageSize]="10"
+              [pageSizeOptions]="[5, 10, 25, 100]">
+</mat-paginator>

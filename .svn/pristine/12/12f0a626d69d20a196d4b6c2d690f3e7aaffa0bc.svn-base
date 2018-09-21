@@ -1,0 +1,21 @@
+<mat-sidenav-container class="app-container">
+  <mat-sidenav mode="side" opened>
+    <h3 fxLayoutAlign="start center" fxLayoutGap="10px" class="sidenav-header">
+      <mat-icon>home</mat-icon>
+      <span>RC Personal</span>
+    </h3>
+    <mat-nav-list role="navList">
+      <app-nav-list-item *ngFor="let link of links" [item]="link" (reset)="resetNav($event)"></app-nav-list-item>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div class="app-loading" *ngIf="isLoading">
+        <div class="app-loading-backdrop"></div>
+        <fa-icon icon="spinner" size="3x" [fixedWidth]="true" [spin]="true"></fa-icon>
+        <p>Loading...</p>
+    </div>
+    <div class="app-content">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

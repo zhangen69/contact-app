@@ -1,0 +1,38 @@
+span, .mat-icon {
+    color: #fff;
+}
+
+.mat-list-item.active {
+    background-color: #2e475f;
+}
+
+/* List Expand/Collapse animation reference: https://codepen.io/mbrookes/pen/GowvKN */
+
+.nested-links {
+    border-right: 5px solid #1ABB9C;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.1s ease-out, border-ease .3s;
+}
+
+.mat-list-item.expanded ~ .nested-links {
+    max-height: 1000px;
+    transition: max-height 0.5s ease-in, border-ease .3s;
+}
+
+.nested-links {
+    background-color: #3a5673;
+}
+
+.nested-links a {
+    font-size: 14px;
+}
+
+@keyframes border-ease {
+    from { 
+        border-right: 0px solid #1ABB9C;
+    }
+    to { 
+        border-right: 5px solid #1ABB9C;
+    }
+}

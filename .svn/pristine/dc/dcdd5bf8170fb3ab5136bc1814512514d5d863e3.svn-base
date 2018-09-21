@@ -1,0 +1,79 @@
+import { Component, OnInit } from '@angular/core';
+import { FormControl, Validators, FormBuilder, NgForm, FormGroup } from '../../../../node_modules/@angular/forms';
+import { Location } from '@angular/common';
+import { EQuotationStatus } from '../../enums/EQuotationStatus.enum';
+import { _ } from 'underscore';
+import { Router } from '../../../../node_modules/@angular/router';
+import { PageHistoryService } from '../../services/page-history/page-history.service';
+import { IMinimumOrderQuantityItem } from '../../interfaces/IMinimumOrderQuantityItem';
+import { IQuotationItem } from '../../interfaces/IQuotationItem';
+
+@Component({
+  selector: 'app-quotation-form',
+  templateUrl: './quotation-form.component.html',
+  styleUrls: ['./quotation-form.component.css']
+})
+export class QuotationFormComponent implements OnInit {
+  formData: FormGroup;
+  quotationStatusList: any = [];
+  selectedStatus = { 'displayName': 'Draft', 'key': '0' };
+  list: Array<IQuotationItem> = [
+    { id: 1, quotationId: 1, minimumOrderQuantityItems: [
+      { id: 1, quantity: 1000, unitAmount: 0.5 },
+      { id: 1, quantity: 2000, unitAmount: 0.7 },
+      { id: 1, quantity: 3000, unitAmount: 0.005 },
+    ] as Array<IMinimumOrderQuantityItem> },
+    { id: 1, quotationId: 1, minimumOrderQuantityItems: [
+      { id: 1, quantity: 1000, unitAmount: 0.5 },
+      { id: 1, quantity: 2000, unitAmount: 0.7 },
+      { id: 1, quantity: 3000, unitAmount: 0.005 },
+    ] as Array<IMinimumOrderQuantityItem> },
+    { id: 1, quotationId: 1, minimumOrderQuantityItems: [
+      { id: 1, quantity: 1000, unitAmount: 0.5 },
+      { id: 1, quantity: 2000, unitAmount: 0.7 },
+      { id: 1, quantity: 3000, unitAmount: 0.005 },
+    ] as Array<IMinimumOrderQuantityItem> },
+    { id: 1, quotationId: 1, minimumOrderQuantityItems: [
+      { id: 1, quantity: 1000, unitAmount: 0.5 },
+      { id: 1, quantity: 2000, unitAmount: 0.7 },
+      { id: 1, quantity: 3000, unitAmount: 0.005 },
+    ] as Array<IMinimumOrderQuantityItem> },
+  ];
+  displayedColumns: string[] = ['selected', 'quantity', 'unitAmount', 'subTotal'];
+
+  constructor(public location: Location, public fb: FormBuilder, private router: Router, private pageHistoryService: PageHistoryService) { }
+
+  ngOnInit() {
+    _.some(this.quotationStatusList, {  });
+    _.each(EQuotationStatus, (item, key) => {
+      if (!(this.quotationStatusList[item] && this.quotationStatusList[item]['displayName'] === key)) {
+        this.quotationStatusList.push({ displayName: item, key: key });
+      }
+    });
+    this.formData = this.fb.group({
+      customer: new FormControl(''),
+      term: new FormControl(''),
+      revised: new FormControl('', Validators.required),
+      status: new FormControl(_.first(this.quotationStatusList)),
+      email: new FormControl(''),
+      // quotation item(s) => { measurement width, measurement length, item, quality, colour, finishing, remark, moq item(s) => { MOQ, unit price } }
+    });
+  }
+
+  onBack() {
+    if (this.pageHistoryService.previousPageUrl.indexOf('quotation') >= 0) {
+      this.location.back();
+    } else {
+      this.router.navigate(['/quotation']);
+    }
+  }
+
+  onSubmit({ value, valid }: { value: any, valid: boolean }) {
+    if (!valid) {
+      console.log('form is incomplete, please fill in all required fields...');
+    } else {
+      console.log('form submitting...');
+    }
+  }
+
+}

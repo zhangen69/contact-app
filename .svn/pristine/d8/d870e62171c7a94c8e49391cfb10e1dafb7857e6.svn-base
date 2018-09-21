@@ -1,0 +1,65 @@
+import { NgModule } from '@angular/core';
+import { Routes, RouterModule } from '@angular/router';
+import { HomeComponent } from './home/home.component';
+
+const routes: Routes = [
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: 'home', component: HomeComponent, data: { breadcrumb: 'Home' } },
+  { path: 'quotation', component: HomeComponent, children: [
+    { path: '', redirectTo: '/quotation/list', pathMatch: 'full' },
+    { path: 'list', component: HomeComponent, data: { breadcrumb: 'List' } },
+    { path: 'list/confirmed', component: HomeComponent, data: { breadcrumb: 'Confirmed List' } },
+    { path: 'list/rejected', component: HomeComponent, data: { breadcrumb: 'Rejected List' } },
+    { path: 'new', component: HomeComponent, data: { breadcrumb: 'New' } },
+    { path: 'edit/:id', component: HomeComponent, data: { breadcrumb: 'Edit' } },
+    { path: 'view/:id', component: HomeComponent, data: { breadcrumb: 'View' } },
+  ], data: { breadcrumb: 'Quotation' }},
+  { path: 'quotationItem', component: HomeComponent, children: [
+    { path: '', redirectTo: '/quotationItem/list', pathMatch: 'full' },
+    { path: 'list', component: HomeComponent, data: { breadcrumb: 'List' } },
+    { path: 'list/approved', component: HomeComponent, data: { breadcrumb: 'Approved List' } },
+    { path: 'list/rejected', component: HomeComponent, data: { breadcrumb: 'Rejected List' } },
+    { path: 'view/:id', component: HomeComponent, data: { breadcrumb: 'View' } },
+  ], data: { breadcrumb: 'Quotation Item' }},
+  { path: 'customer', component: HomeComponent, children: [
+    { path: '', redirectTo: '/customer/list', pathMatch: 'full' },
+    { path: 'list', component: HomeComponent, data: { breadcrumb: 'List' } },
+    { path: 'new', component: HomeComponent, data: { breadcrumb: 'New' } },
+    { path: 'edit/:id', component: HomeComponent, data: { breadcrumb: 'Edit' } },
+    { path: 'view/:id', component: HomeComponent, data: { breadcrumb: 'View' } },
+  ], data: { breadcrumb: 'Customer' }},
+  { path: 'finishing', component: HomeComponent, children: [
+    { path: '', redirectTo: '/finishing/list', pathMatch: 'full' },
+    { path: 'list', component: HomeComponent, data: { breadcrumb: 'List' } },
+    { path: 'new', component: HomeComponent, data: { breadcrumb: 'New' } },
+    { path: 'edit/:id', component: HomeComponent, data: { breadcrumb: 'Edit' } },
+    { path: 'view/:id', component: HomeComponent, data: { breadcrumb: 'View' } },
+  ], data: { breadcrumb: 'Finishing' }},
+  { path: 'item', component: HomeComponent, children: [
+    { path: '', redirectTo: '/item/list', pathMatch: 'full' },
+    { path: 'list', component: HomeComponent, data: { breadcrumb: 'List' } },
+    { path: 'new', component: HomeComponent, data: { breadcrumb: 'New' } },
+    { path: 'edit/:id', component: HomeComponent, data: { breadcrumb: 'Edit' } },
+    { path: 'view/:id', component: HomeComponent, data: { breadcrumb: 'View' } },
+  ], data: { breadcrumb: 'Item' }},
+  { path: 'colour', component: HomeComponent, children: [
+    { path: '', redirectTo: '/colour/list', pathMatch: 'full' },
+    { path: 'list', component: HomeComponent, data: { breadcrumb: 'List' } },
+    { path: 'new', component: HomeComponent, data: { breadcrumb: 'New' } },
+    { path: 'edit/:id', component: HomeComponent, data: { breadcrumb: 'Edit' } },
+    { path: 'view/:id', component: HomeComponent, data: { breadcrumb: 'View' } },
+  ], data: { breadcrumb: 'Colour' }},
+  { path: 'quality', component: HomeComponent, children: [
+    { path: '', redirectTo: '/quality/list', pathMatch: 'full' },
+    { path: 'list', component: HomeComponent, data: { breadcrumb: 'List' } },
+    { path: 'new', component: HomeComponent, data: { breadcrumb: 'New' } },
+    { path: 'edit/:id', component: HomeComponent, data: { breadcrumb: 'Edit' } },
+    { path: 'view/:id', component: HomeComponent, data: { breadcrumb: 'View' } },
+  ], data: { breadcrumb: 'Quality' }},
+];
+
+@NgModule({
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
+})
+export class AppRoutingModule { }

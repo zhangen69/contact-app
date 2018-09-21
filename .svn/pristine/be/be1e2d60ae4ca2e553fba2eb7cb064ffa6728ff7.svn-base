@@ -1,0 +1,63 @@
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group > .ng-fa-icon {
+    color: #888;
+    padding: 0 15px;
+}
+
+.mat-card-actions {
+    border-top: 1px solid #ccc;
+}
+
+.form-group .w-100 {
+    width: calc(100% - 47.5px);
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-container > .form-group > * {
+    /* width: 100%; */
+}
+
+.form-group > .mat-button-toggle-group {
+    overflow: inherit;
+}
+
+.form-group > .mat-button-toggle-group > .label-control {
+    position: absolute;
+    color: rgba(0,0,0,.54);
+    top: .1em;
+    transform: translateY(-1.28125em) scale(.75) perspective(100px) translateZ(.001px);
+    left: -5px;
+}
+
+.form-group > .mat-button-toggle-group[color=primary] > .mat-button-toggle.mat-button-toggle-checked {
+    background-color: #3f51b5;
+    color: #fff;
+}
+
+.form-group > .mat-accordion > .mat-expansion-panel {
+    margin-top: 15px;
+}
+
+.form-group > .mat-accordion > .mat-expansion-panel .mat-table {
+    width: 100%;
+}
+
+.form-group .mat-form-field.readonly,
+.form-group .mat-form-field.readonly .mat-select-trigger,
+.form-group .mat-button-toggle-group.readonly,
+.form-group .mat-button-toggle-group.readonly > .mat-button-toggle,
+.form-group .mat-button-toggle-group.readonly > .mat-button-toggle .mat-button-toggle-button,
+.form-group .mat-button-toggle-group.readonly > .mat-button-toggle .mat-button-toggle-button .mat-button-toggle-label-content {
+    cursor: not-allowed !important;
+}
+
+.form-group .mat-form-field.readonly .mat-select {
+    pointer-events: none;
+}

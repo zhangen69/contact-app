@@ -1,0 +1,38 @@
+table {
+    width: 100%;
+}
+
+.example-icon {
+  padding: 0 14px;
+}
+
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+.toolbar-btn-group > .btn-action {
+  margin: 0 5px;
+}
+
+.filter-options-group {
+  margin-top: 5px;
+}
+
+.filter-options-group > [class^="filter-option-"] {
+  margin: 0 5px;
+  font-size: 15px;
+}
+
+.btn-icon-plus {
+  color: #407b40;
+}
+
+.btn-icon-trash {
+  color: #e26161;
+}
+
+.filter-search-option {
+  font-size: 12px;
+  margin: 0 5px;
+  line-height: 30px;
+}

@@ -1,0 +1,53 @@
+import { Component, OnInit } from '@angular/core';
+import { FormControl, Validators, FormBuilder, NgForm } from '../../../../node_modules/@angular/forms';
+import { Location } from '@angular/common';
+import { EQuotationStatus } from '../../enums/EQuotationStatus.enum';
+import { _ } from 'underscore';
+import { Router } from '../../../../node_modules/@angular/router';
+import { PageHistoryService } from '../../services/page-history/page-history.service';
+
+@Component({
+  selector: 'app-quotation-form',
+  templateUrl: './quotation-form.component.html',
+  styleUrls: ['./quotation-form.component.css']
+})
+export class QuotationFormComponent implements OnInit {
+  formData = this.fb.group({
+    customer: new FormControl(''),
+    term: new FormControl(''),
+    revised: new FormControl('', Validators.required),
+    status: new FormControl(''),
+    email: new FormControl(''),
+    // quotation item(s) => { measurement width, measurement length, item, quality, colour, finishing, remark, moq item(s) => { MOQ, unit price } }
+  });
+  quotationStatusList: any = [];
+  selectedStatus = { 'displayName': 'Draft', 'key': '0' };
+
+  constructor(public location: Location, public fb: FormBuilder, private router: Router, private pageHistoryService: PageHistoryService) { }
+
+  ngOnInit() {
+    _.some(this.quotationStatusList, {  });
+    _.each(EQuotationStatus, (item, key) => {
+      if (!(this.quotationStatusList[item] && this.quotationStatusList[item]['displayName'] === key)) {
+        this.quotationStatusList.push({ displayName: item, key: key });
+      }
+    });
+  }
+
+  onBack() {
+    if (this.pageHistoryService.previousPageUrl.indexOf('quotation') >= 0) {
+      this.location.back();
+    } else {
+      this.router.navigate(['/quotation']);
+    }
+  }
+
+  onSubmit({ value, valid }: { value: any, valid: boolean }) {
+    if (!valid) {
+      console.log('form is incomplete, please fill in all required fields...');
+    } else {
+      console.log('form submitting...');
+    }
+  }
+
+}

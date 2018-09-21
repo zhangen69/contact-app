@@ -1,0 +1,118 @@
+import { Component, OnInit, ChangeDetectorRef, OnDestroy, ViewChild } from '@angular/core';
+import { timer } from 'rxjs';
+import { MediaMatcher } from '../../node_modules/@angular/cdk/layout';
+import { Router, NavigationEnd } from '../../node_modules/@angular/router';
+import { _ } from 'underscore';
+import { MatSidenav } from '../../node_modules/@angular/material';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent implements OnInit, OnDestroy {
+  title = 'quotation-system-app';
+  isLoading = true;
+  @ViewChild('appSidenav') sidenav: MatSidenav;
+  mobileQuery: MediaQueryList;
+  tabletQuery: MediaQueryList;
+  currentRoute = null;
+  appBreadcrumbs: any;
+
+  private mediaQueryListener: () => void;
+
+  // mock data
+  links = [
+    { dispalyName: 'Home', icon: 'home', route: '/home', nestedLinks: [] },
+    { dispalyName: 'Quotation', icon: 'insert_drive_file', route: '/quotation', nestedLinks: [
+      { dispalyName: 'Manage', route: '/list' },
+      { dispalyName: 'Manage Rejected Quotation', route: '/list/rejected' },
+      { dispalyName: 'Manage Confirmed Quotation', route: '/list/confirmed' },
+      { dispalyName: 'New', route: '/new' },
+    ]},
+    { dispalyName: 'Quotation Item', icon: 'insert_drive_file', route: '/quotationItem', nestedLinks: [
+      { dispalyName: 'Manage', route: '/list' },
+      { dispalyName: 'Approved Quotation Items', route: '/list' },
+      { dispalyName: 'Rejected Quotation Items', route: '/list' },
+    ]},
+    { dispalyName: 'Customer', icon: 'supervised_user_circle', route: '/customer', nestedLinks: [
+      { dispalyName: 'Manage', route: '/list' },
+      { dispalyName: 'New', route: '/edit/' },
+    ]},
+    { dispalyName: 'Finishing', icon: 'insert_drive_file', route: '/finishing', nestedLinks: [
+      { dispalyName: 'Manage', route: '/finishing/list' },
+      { dispalyName: 'New', route: '/finishing/edit/' },
+    ]},
+    { dispalyName: 'Item', icon: 'insert_drive_file', route: '/item', nestedLinks: [
+      { dispalyName: 'Manage', route: '/list' },
+      { dispalyName: 'New', route: '/edit/' },
+    ]},
+    { dispalyName: 'Colour', icon: 'color_lens', route: '/colour', nestedLinks: [
+      { dispalyName: 'Manage', route: '/list' },
+      { dispalyName: 'New', route: '/edit/' },
+    ]},
+    { dispalyName: 'Quality', icon: 'insert_drive_file', route: '/quality', nestedLinks: [
+      { dispalyName: 'Manage', route: '/list' },
+      { dispalyName: 'New', route: '/edit/' },
+    ]},
+  ];
+
+  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher, public router: Router) {
+    this.mobileQuery = media.matchMedia('(max-width: 600px)');
+    this.tabletQuery = media.matchMedia('(max-width: 960px) and (min-width: 600px)');
+
+    this.mediaQueryListener = () => changeDetectorRef.detectChanges();
+
+    this.mobileQuery.addListener(this.mediaQueryListener);
+    this.tabletQuery.addListener(this.mediaQueryListener);
+    this.tabletQuery['expanded'] = false;
+
+    router.events.subscribe((route) => {
+      if (route instanceof NavigationEnd) {
+        if (!!this.currentRoute && this.currentRoute !== route.url && !!this.mobileQuery.matches) {
+          this.sidenav.opened = false;
+        }
+
+        this.currentRoute = route.url;
+      }
+
+    });
+
+    this.routeInitialize(this.links, null);
+  }
+
+  ngOnInit() {
+    timer(1000).subscribe(() => this.isLoading = false);
+    if (this.mobileQuery.matches === false) {
+      this.sidenav.opened = true;
+    }
+
+  }
+
+  ngOnDestroy(): void {
+    this.mobileQuery.removeListener(this.mediaQueryListener);
+  }
+
+  resetNav(selectedLink) {
+    _.each(this.links, (link) => link['expanded'] = link === selectedLink ? selectedLink.expanded : false);
+  }
+
+  routeInitialize(links, parentRoute) {
+    _.each(links, (link) => {
+      link.parentRoute = !!parentRoute ? parentRoute : '';
+      link.fullRoute = link.parentRoute + link.route;
+
+      if (!!link.nestedLinks && link.nestedLinks.length > 0) {
+        this.routeInitialize(link.nestedLinks, link.parentRoute + link.route);
+      }
+    });
+  }
+
+  sidenavToggle() {
+    if (!!this.tabletQuery.matches) {
+      this.tabletQuery['expanded'] = !this.tabletQuery['expanded'];
+    } else {
+      this.sidenav.toggle();
+    }
+  }
+}

@@ -1,0 +1,30 @@
+<mat-sidenav-container class="app-container" [ngClass]="{'tablet-mode': tabletQuery.matches, 'mobile-mode': mobileQuery.matches}">
+  <mat-sidenav #appSidenav mode="side" [mode]="mobileQuery.matches ? 'over' : 'side'" [ngClass]="{'expanded': tabletQuery.expanded, 'sidenav-opened': appSidenav.opened, 'sidenav-closed': !appSidenav.opened}">
+    <h3 fxLayoutAlign="start center" fxLayoutGap="10px" class="sidenav-header">
+      <mat-icon>home</mat-icon>
+      <span fxFlex [fxHide]="!!tabletQuery.matches && !tabletQuery.expanded">RC Personal</span>
+      <button mat-icon-button (click)="appSidenav.toggle()" fxShow.xs="true" fxShow="false">
+          <mat-icon aria-label="icon-button">close</mat-icon>
+        </button>
+    </h3>
+    <mat-nav-list role="navList">
+      <app-nav-list-item *ngFor="let link of links" [item]="link" (reset)="resetNav($event)" [currentRoute]="currentRoute" [tabletMode]="tabletQuery.matches" (openDialog)="openNavigationDialog($event)" [sidenavExpanded]="tabletQuery.expanded"></app-nav-list-item>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content fxLayout="column" fxFlex>
+    <div class="app-loading" *ngIf="loadingPageService.isLoading">
+        <div class="app-loading-backdrop"></div>
+        <fa-icon icon="spinner" size="3x" [fixedWidth]="true" [spin]="true"></fa-icon>
+        <p>Loading...</p>
+    </div>
+    <div fxLayout="row" class="app-nav" *ngIf="!loadingPageService.isLoading">
+      <button class="btn btn-icon" (click)="sidenavToggle()">
+          <fa-icon icon="bars" size="2x" [fixedWidth]="true"></fa-icon>
+      </button>
+      <app-breadcrumb></app-breadcrumb>
+    </div>
+    <div class="app-content" *ngIf="!loadingPageService.isLoading">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

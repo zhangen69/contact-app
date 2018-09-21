@@ -1,0 +1,86 @@
+import { Component, OnInit } from '@angular/core';
+import { IQuotation } from '../../interfaces/IQuotation';
+import { EQuotationStatus } from '../../enums/EQuotationStatus.enum';
+import { _ } from 'underscore';
+import { ICustomer } from '../../interfaces/ICustomer';
+import { IAudit } from '../../interfaces/IAudit';
+import { IDocument } from '../../interfaces/IDocument';
+import { EQuotationTerm } from '../../enums/EQuotationTerm.enum';
+
+const mock_document_data: IDocument = {
+  date: new Date(),
+  documentId: '#SPQ180705-0008',
+  serial: 8,
+  remark: ''
+};
+
+const mock_audit_data: IAudit = {
+  createdBy: 'admin',
+  createdDate: new Date(),
+  updatedBy: 'admin',
+  updatedDate: new Date(),
+  deleted: false
+};
+
+const mock_customer_data: ICustomer = {
+  id: 1,
+  name: 'Jaocb',
+  phone: '07-123 4564',
+  email: 'abc123@gmail.com',
+  fax: '07-126 4561',
+  gstRegistrationNumber: '154asd785dcz',
+  address: '',
+  audit: mock_audit_data,
+  personInCharge: { name: 'Jacob', phone: '019-7524561', email: 'jacob.tan@gmail.com' }
+};
+
+const ELEMENT_DATA: IQuotation[] = [
+  { documentId: '#SPQ180705-0008', customerId: 1, customer: mock_customer_data, status: EQuotationStatus.Sent, audit: mock_audit_data, archive: false, date: new Date(), document: mock_document_data, remark: '', revised: false, term: EQuotationTerm.Cash, totalAmount: 1000},
+  { documentId: '#SPQ180705-0008', customerId: 1, customer: mock_customer_data, status: EQuotationStatus.Sent, audit: mock_audit_data, archive: false, date: new Date(), document: mock_document_data, remark: '', revised: false, term: EQuotationTerm.Cash, totalAmount: 1000},
+  { documentId: '#SPQ180705-0008', customerId: 1, customer: mock_customer_data, status: EQuotationStatus.Sent, audit: mock_audit_data, archive: false, date: new Date(), document: mock_document_data, remark: '', revised: false, term: EQuotationTerm.Cash, totalAmount: 1000},
+  { documentId: '#SPQ180705-0008', customerId: 1, customer: mock_customer_data, status: EQuotationStatus.Sent, audit: mock_audit_data, archive: false, date: new Date(), document: mock_document_data, remark: '', revised: false, term: EQuotationTerm.Cash, totalAmount: 1000},
+  { documentId: '#SPQ180705-0008', customerId: 1, customer: mock_customer_data, status: EQuotationStatus.Sent, audit: mock_audit_data, archive: false, date: new Date(), document: mock_document_data, remark: '', revised: false, term: EQuotationTerm.Cash, totalAmount: 1000},
+  { documentId: '#SPQ180705-0008', customerId: 1, customer: mock_customer_data, status: EQuotationStatus.Sent, audit: mock_audit_data, archive: false, date: new Date(), document: mock_document_data, remark: '', revised: false, term: EQuotationTerm.Cash, totalAmount: 1000},
+  { documentId: '#SPQ180705-0008', customerId: 1, customer: mock_customer_data, status: EQuotationStatus.Sent, audit: mock_audit_data, archive: false, date: new Date(), document: mock_document_data, remark: '', revised: false, term: EQuotationTerm.Cash, totalAmount: 1000},
+  { documentId: '#SPQ180705-0008', customerId: 1, customer: mock_customer_data, status: EQuotationStatus.Sent, audit: mock_audit_data, archive: false, date: new Date(), document: mock_document_data, remark: '', revised: false, term: EQuotationTerm.Cash, totalAmount: 1000},
+  { documentId: '#SPQ180705-0008', customerId: 1, customer: mock_customer_data, status: EQuotationStatus.Sent, audit: mock_audit_data, archive: false, date: new Date(), document: mock_document_data, remark: '', revised: false, term: EQuotationTerm.Cash, totalAmount: 1000},
+];
+
+@Component({
+  selector: 'app-quotation-list',
+  templateUrl: './quotation-list.component.html',
+  styleUrls: ['./quotation-list.component.css']
+})
+export class QuotationListComponent implements OnInit {
+  displayedColumns: string[] = ['selected', 'documentId', 'customer.name', 'customer.personInCharge.name', 'customer.personInCharge.phone', 'customer.personInCharge.email', 'status', 'audit'];
+  dataSource = ELEMENT_DATA;
+  selectedAll = false;
+  quotationStatusList = EQuotationStatus;
+  actions = [
+    { displayName: 'Confirm', icon: 'file', route: '', onClick: () => { alert('Confirm button clicked!'); }, show: () => true },
+    { displayName: 'Confirm2', icon: 'file', route: '', onClick: () => { alert('Confirm2 button clicked!'); }, show: () => false },
+  ];
+
+  constructor() {}
+
+  ngOnInit() {
+    _.each(this.dataSource, (item) => item.selected = false);
+    // debugger;
+    // _.each(EQuotationStatus, (item, key) => {
+    //   debugger;
+    //   this.quotationStatusList[] { displayName: item, key: key};
+    // });
+  }
+
+  toggleAll() {
+    this.selectedAll = !this.selectedAll;
+    _.each(this.dataSource, (item) => item.selected = this.selectedAll);
+  }
+
+  selectedItem(item, $event) {
+    // update value
+    item.selected = $event.checked;
+    // check is all item is selected ?
+    this.selectedAll = _.every(this.dataSource, { selected: true });
+  }
+}

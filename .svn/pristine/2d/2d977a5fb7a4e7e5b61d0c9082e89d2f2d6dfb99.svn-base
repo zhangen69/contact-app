@@ -1,0 +1,33 @@
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl, Validators, FormBuilder, NgForm } from '../../../../node_modules/@angular/forms';
+import { Location } from '@angular/common';
+
+@Component({
+  selector: 'app-quotation-form',
+  templateUrl: './quotation-form.component.html',
+  styleUrls: ['./quotation-form.component.css']
+})
+export class QuotationFormComponent implements OnInit {
+  formData = this.fb.group({
+    customer: new FormControl(''),
+    term: new FormControl(''),
+    revised: new FormControl('', Validators.required),
+    status: new FormControl('Sent'),
+    email: new FormControl(''),
+    // quotation item(s) => { measurement width, measurement length, item, quality, colour, finishing, remark, moq item(s) => { MOQ, unit price } }
+  });
+
+  constructor(public location: Location, public fb: FormBuilder) { }
+
+  ngOnInit() {
+  }
+
+  onSubmit({ value, valid }: { value: any, valid: boolean }) {
+    if (!valid) {
+      console.log('form is incomplete, please fill in all required fields...');
+    } else {
+      console.log('form submitting...');
+    }
+  }
+
+}

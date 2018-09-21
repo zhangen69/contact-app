@@ -1,0 +1,168 @@
+import { Component, OnInit, Injectable } from '@angular/core';
+import { FormControl, Validators, FormBuilder, NgForm, FormGroup, FormArray } from '../../../../node_modules/@angular/forms';
+import { Location } from '@angular/common';
+import { EQuotationStatus } from '../../enums/EQuotationStatus.enum';
+import { _ } from 'underscore';
+import { Router } from '../../../../node_modules/@angular/router';
+import { PageHistoryService } from '../../services/page-history/page-history.service';
+import { IMinimumOrderQuantityItem } from '../../interfaces/IMinimumOrderQuantityItem';
+import { IQuotationItem } from '../../interfaces/IQuotationItem';
+import { EQuotationTerm } from '../../enums/EQuotationTerm.enum';
+import { QuestionBase } from '../../dynamic-form-field/dynamic-form-field.component';
+import {Observable} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
+import { ICustomer } from '../../interfaces/ICustomer';
+
+
+export class Selection extends QuestionBase<string> {
+  controlType = 'dropdown';
+  options: { key: number, displayName: string }[] = [];
+
+  constructor(options: {} = {}) {
+    super(options);
+    this.options = options['options'] || [];
+  }
+}
+
+export class TextboxQuestion extends QuestionBase<string> {
+  controlType = 'textbox';
+  type: string;
+
+  constructor(options: {} = {}) {
+    super(options);
+    this.type = options['type'] || '';
+  }
+}
+
+@Injectable()
+export class QuestionService {
+
+  // TODO: get from a remote source of question metadata
+  // TODO: make asynchronous
+  getQuestions() {
+
+    const questions: QuestionBase<any>[] = [
+
+      new Selection({
+        key: 'brave',
+        label: 'Bravery Rating',
+        options: EQuotationStatus,
+        // options: [
+        //   {key: 0,  displayName: 'Solid'},
+        //   {key: 1,  displayName: 'Great'},
+        //   {key: 2,   displayName: 'Good'},
+        //   {key: 3, displayName: 'Unproven'}
+        // ],
+        order: 3
+      }),
+
+      new TextboxQuestion({
+        key: 'firstName',
+        label: 'First name',
+        value: 'Bombasto',
+        required: true,
+        order: 1
+      }),
+
+      new TextboxQuestion({
+        key: 'emailAddress',
+        label: 'Email',
+        type: 'email',
+        order: 2
+      })
+    ];
+
+    return questions.sort((a, b) => a.order - b.order);
+  }
+}
+
+@Component({
+  selector: 'app-quotation-form',
+  templateUrl: './quotation-form.component.html',
+  styleUrls: ['./quotation-form.component.css']
+})
+export class QuotationFormComponent implements OnInit {
+  questions: any[];
+  formData: any = {
+    quotationItems: []
+  };
+  profileData: FormGroup;
+  objectKeys = Object.keys;
+  quotationStatusList: any = [];
+  quotationTermList: any = [];
+  displayedColumns: string[] = ['selected', 'quantity', 'unitAmount', 'subTotal'];
+  itemList = [];
+  qualityList = [];
+  colourList = [];
+  finishingList = [];
+  matAutoCompleteOptions: Partial<ICustomer>[] = [{id: 1, name: 'Customer 01'}, {id: 2, name: 'Customer 02'}];
+  filteredOptions: Observable<Partial<ICustomer>[]>;
+
+  constructor(public location: Location, public fb: FormBuilder, private router: Router, private pageHistoryService: PageHistoryService, service: QuestionService) {
+    // this.questions = service.getQuestions();
+  }
+
+  ngOnInit() {
+    this.setEnumList(this.quotationStatusList, EQuotationStatus);
+    this.setEnumList(this.quotationTermList, EQuotationTerm);
+
+    this.formData.status = _.first(this.quotationStatusList).key;
+    this.formData.term = _.first(this.quotationTermList).key;
+
+    this.formData.quotationItems.push({ id: 1, quotationId: 1, itemId: 1, colourId: 1, finishingId: 1, qualityId: 1, remarks: 'some remarks here...',
+      minimumOrderQuantityItems: [{ id: 1, quantity: 1000, unitAmount: 0.5 }, { id: 1, quantity: 2000, unitAmount: 0.7 }, { id: 1, quantity: 3000, unitAmount: 0.005 }] as Array<IMinimumOrderQuantityItem> });
+    this.formData.quotationItems.push({ id: 1, quotationId: 1, itemId: 1, colourId: 1, finishingId: 1, qualityId: 1, remarks: 'some remarks here...',
+      minimumOrderQuantityItems: [{ id: 1, quantity: 1000, unitAmount: 0.5 }, { id: 1, quantity: 2000, unitAmount: 0.7 }, { id: 1, quantity: 3000, unitAmount: 0.005 }] as Array<IMinimumOrderQuantityItem> });
+    this.formData.quotationItems.push({ id: 1, quotationId: 1, itemId: 1, colourId: 1, finishingId: 1, qualityId: 1, remarks: 'some remarks here...',
+      minimumOrderQuantityItems: [{ id: 1, quantity: 1000, unitAmount: 0.5 }, { id: 1, quantity: 2000, unitAmount: 0.7 }, { id: 1, quantity: 3000, unitAmount: 0.005 }] as Array<IMinimumOrderQuantityItem> });
+
+    this.itemList = [{ id: 1, name: 'Item 01', remarks: '' }, { id: 2, name: 'Item 02', remarks: '' }, { id: 3, name: 'Item 03', remarks: '' }];
+    this.qualityList = [{ id: 1, name: 'Quality 01', remarks: '' }, { id: 2, name: 'Quality 02', remarks: '' }, { id: 3, name: 'Quality 03', remarks: '' }];
+    this.colourList = [{ id: 1, name: 'Colour 01', remarks: '' }, { id: 2, name: 'Colour 02', remarks: '' }, { id: 3, name: 'Colour 03', remarks: '' }];
+    this.finishingList = [{ id: 1, name: 'Finishing 01', remarks: '' }, { id: 2, name: 'Finishing 02', remarks: '' }, { id: 3, name: 'Finishing 03', remarks: '' }];
+
+    this.profileData = this.fb.group({
+      name: 'Jacob',
+      email: 'jacob@gmail.com',
+      experiences: this.fb.array([
+        this.fb.group({title: 'Title 01', remarks: 'Remarks'}),
+        this.fb.group({title: 'Title 02', remarks: 'Remarks'}),
+        this.fb.group({title: 'Title 03', remarks: 'Remarks'}),
+      ])
+    });
+  }
+
+  searchCustomer(searchText = '') { // normally this function will pass query to Backend API to get data
+    this.filteredOptions = _.filter(this.matAutoCompleteOptions, (option) => option.name.toLowerCase().indexOf(searchText.toLowerCase()) >= 0);
+    return this.filteredOptions;
+  }
+
+  private _filter(searchText: string): any[] {
+    return this.matAutoCompleteOptions.filter(option => option.name.toLowerCase().includes(searchText.toLowerCase()));
+  }
+
+  setEnumList(enumList, EEnum) {
+    _.each(EEnum, (item, key) => {
+      if (!(enumList[item] && enumList[item]['displayName'] === key)) {
+        enumList.push({ displayName: item, key: key });
+      }
+    });
+  }
+
+  onBack() {
+    if (this.pageHistoryService.previousPageUrl.indexOf('quotation') >= 0) {
+      this.location.back();
+    } else {
+      this.router.navigate(['/quotation']);
+    }
+  }
+
+  onSubmit({ value, valid }: { value: any, valid: boolean }) {
+    if (!valid) {
+      console.log('form is incomplete, please fill in all required fields...');
+    } else {
+      console.log('form submitting...');
+    }
+  }
+
+}

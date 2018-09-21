@@ -1,0 +1,34 @@
+<div class="container">
+  <form [formGroup]="formData" (ngSubmit)=onSubmit()>
+      <div class="form-group">
+          <fa-icon icon=user size=1x [fixedWidth]=true></fa-icon>
+          <mat-form-field hintLabel="Max 10 characters">
+            <input matInput #input maxlength=10 placeholder="Customer" formControlName=customer>
+            <mat-hint align=end>{{input.value?.length || 0}}/10</mat-hint>
+          </mat-form-field>
+      </div>
+      <div class="form-group">
+          <fa-icon icon=user size=1x [fixedWidth]=true></fa-icon>
+          <mat-form-field hintLabel="Max 10 characters">
+            <input matInput #input maxlength=10 placeholder="Term" formControlName=term>
+            <mat-hint align=end>{{input.value?.length || 0}}/10</mat-hint>
+          </mat-form-field>
+      </div>
+      <div class="form-group">
+          <fa-icon icon=user size=1x [fixedWidth]=true></fa-icon>
+          <mat-form-field hintLabel="Max 10 characters">
+            <input matInput #input maxlength=10 placeholder="Revised" formControlName=revised>
+            <mat-hint align=end>{{input.value?.length || 0}}/10</mat-hint>
+          </mat-form-field>
+      </div>
+      <div class="form-group">
+          <fa-icon icon=user size=1x [fixedWidth]=true></fa-icon>
+          <mat-form-field hintLabel="Max 10 characters">
+            <input matInput #input maxlength=10 placeholder="Status" formControlName=status>
+            <mat-hint align=end>{{input.value?.length || 0}}/10</mat-hint>
+          </mat-form-field>
+      </div>
+  </form>  
+</div>
+{{formData.value | json}}
+<button class="foo-button mdc-button">Button</button>

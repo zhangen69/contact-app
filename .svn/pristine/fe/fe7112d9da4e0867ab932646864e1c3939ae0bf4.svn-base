@@ -1,0 +1,8 @@
+<a mat-list-item (click)="onItemSelected(item)" [ngClass]="{ 'expanded': item.expanded, 'active': currentRoute === item.route }">
+  <mat-icon [ngClass]="{ 'md-24': (tabletMode && !sidenavExpanded), 'md-18': !(tabletMode && !sidenavExpanded) }">{{ item.icon }}</mat-icon>
+  <span fxFlex [fxHide]="tabletMode && !sidenavExpanded">{{ item.displayName }}</span>
+  <mat-icon [fxHide]="tabletMode && !sidenavExpanded" [@indicatorRotate]="!!item.expanded ? 'expanded': 'collapsed'" *ngIf="!!item.nestedLinks && item.nestedLinks.length > 0">expand_more</mat-icon>
+</a>
+<div class="nested-links" *ngIf="!(tabletMode && !sidenavExpanded)">
+  <app-nav-list-item *ngFor="let nestedLink of item.nestedLinks" [item]="nestedLink" (reset)="reset.emit($event)"></app-nav-list-item>
+</div>

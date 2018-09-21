@@ -1,0 +1,26 @@
+span, .mat-icon {
+    color: #fff;
+}
+
+.mat-list-item.expanded,
+.nested-links {
+    border-right: 5px solid #1ABB9C;
+    animation: border-ease .3s;
+}
+
+.nested-links {
+    background-color: #3a5673;
+}
+
+.nested-links a {
+    font-size: 14px;
+}
+
+@keyframes border-ease {
+    from { 
+        border-right: 0px solid #1ABB9C;
+    }
+    to { 
+        border-right: 5px solid #1ABB9C;
+    }
+}

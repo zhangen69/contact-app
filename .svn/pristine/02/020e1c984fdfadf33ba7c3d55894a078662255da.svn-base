@@ -1,0 +1,57 @@
+import { Component, OnInit } from '@angular/core';
+import * as _ from 'underscore';
+import { timer } from 'rxjs';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent implements OnInit {
+  title = 'quotation-system-app';
+  isLoading = true;
+
+  // mock data
+  links = [
+    { dispalyName: 'Home', icon: 'home', route: '/home', nestedLinks: [] },
+    { dispalyName: 'Quotation', icon: 'insert_drive_file', route: '/quotation', nestedLinks: [
+      { dispalyName: 'Manage', route: '/list' },
+      { dispalyName: 'Manage Rejected Quotation', route: '/rejectedList' },
+      { dispalyName: 'Manage Confirmed Quotation', route: '/confirmedList' },
+      { dispalyName: 'New', route: '/edit/' },
+    ]},
+    { dispalyName: 'Quotation Item', icon: 'insert_drive_file', route: '/quotationItem', nestedLinks: [
+      { dispalyName: 'Manage', route: '/list' },
+      { dispalyName: 'Approved Quotation Items', route: '/list' },
+      { dispalyName: 'Rejected Quotation Items', route: '/list' },
+    ]},
+    { dispalyName: 'Customer', icon: 'supervised_user_circle', route: '/customer', nestedLinks: [
+      { dispalyName: 'Manage', route: '/list' },
+      { dispalyName: 'New', route: '/edit/' },
+    ]},
+    { dispalyName: 'Finishing', icon: 'insert_drive_file', route: '/finishing', nestedLinks: [
+      { dispalyName: 'Manage', route: '/finishing/list' },
+      { dispalyName: 'New', route: '/finishing/edit/' },
+    ]},
+    { dispalyName: 'Item', icon: 'insert_drive_file', route: '/item', nestedLinks: [
+      { dispalyName: 'Manage', route: '/list' },
+      { dispalyName: 'New', route: '/edit/' },
+    ]},
+    { dispalyName: 'Colour', icon: 'color_lens', route: '/colour', nestedLinks: [
+      { dispalyName: 'Manage', route: '/list' },
+      { dispalyName: 'New', route: '/edit/' },
+    ]},
+    { dispalyName: 'Quality', icon: 'insert_drive_file', route: '/quality', nestedLinks: [
+      { dispalyName: 'Manage', route: '/list' },
+      { dispalyName: 'New', route: '/edit/' },
+    ]},
+  ];
+
+  ngOnInit() {
+    timer(1000).subscribe(() => this.isLoading = false);
+  }
+
+  resetNav(selectedLink) {
+    _.each(this.links, (link) =>  link.expanded = link === selectedLink ? selectedLink.expanded : false);
+  }
+}

@@ -1,0 +1,43 @@
+import { Component, OnInit, Inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '../../../../node_modules/@angular/material';
+import { Router } from '../../../../node_modules/@angular/router';
+
+@Component({
+  selector: 'app-navigation-dialog',
+  templateUrl: './navigation-dialog.component.html',
+  styleUrls: ['./navigation-dialog.component.css']
+})
+export class NavigationDialogComponent implements OnInit {
+  // tslint:disable-next-line:max-line-length
+  constructor(public dialogRef: MatDialogRef<NavigationDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any, public router: Router, public dialog: MatDialog) {}
+
+  ngOnInit() {
+  }
+
+  closeDialog() {
+    console.log('closing dialog...');
+    this.dialog.closeAll();
+  }
+
+  navigateTo(link) {
+    if (!!link.nestedLinks && link.nestedLinks.length > 0) {
+      // this.openDialog.emit({dialog: this.dialog, links: link.nestedLinks});
+      console.log('openning new dialog...');
+      this.openNavigationDialog(link.nestedLinks);
+    } else {
+      this.router.navigateByUrl(link.fullRoute);
+      this.closeDialog();
+    }
+  }
+
+  openNavigationDialog(links): void {
+    const dialogRef = this.dialog.open(NavigationDialogComponent, {
+      data: { links: links }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+    });
+  }
+
+}

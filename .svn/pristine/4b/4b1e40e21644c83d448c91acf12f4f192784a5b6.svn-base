@@ -1,0 +1,60 @@
+import { Component, OnInit } from '@angular/core';
+import { faFile, faPaperPlane } from '@fortawesome/free-regular-svg-icons';
+import { IQuotation } from '../../interfaces/IQuotation';
+import { EQuotationStatus } from '../../enums/EQuotationStatus.enum';
+import { _ } from 'underscore';
+
+const ELEMENT_DATA: IQuotation[] = [
+  { documentId: '#SPQ180705-0008', customer: { name: 'Jaocb', personInCharge: { name: 'Jacob', phone: '019-7524561', email: 'jacob.tan@gmail.com' }}, status: EQuotationStatus.Sent,
+   audit: { createdBy: 'admin', createdDate: Date(), updatedBy: 'admin', updatedDate: Date() }},
+  { documentId: '#SPQ180705-0008', customer: { name: 'Jaocb', personInCharge: { name: 'Jacob', phone: '019-7524561', email: 'jacob.tan@gmail.com' }}, status: EQuotationStatus.Sent,
+  audit: { createdBy: 'admin', createdDate: Date(), updatedBy: 'admin', updatedDate: Date() }},
+  { documentId: '#SPQ180705-0008', customer: { name: 'Jaocb', personInCharge: { name: 'Jacob', phone: '019-7524561', email: 'jacob.tan@gmail.com' }}, status: EQuotationStatus.Sent,
+  audit: { createdBy: 'admin', createdDate: Date(), updatedBy: 'admin', updatedDate: Date() }},
+  { documentId: '#SPQ180705-0008', customer: { name: 'Jaocb', personInCharge: { name: 'Jacob', phone: '019-7524561', email: 'jacob.tan@gmail.com' }}, status: EQuotationStatus.Sent,
+  audit: { createdBy: 'admin', createdDate: Date(), updatedBy: 'admin', updatedDate: Date() }},
+  { documentId: '#SPQ180705-0008', customer: { name: 'Jaocb', personInCharge: { name: 'Jacob', phone: '019-7524561', email: 'jacob.tan@gmail.com' }}, status: EQuotationStatus.Sent,
+  audit: { createdBy: 'admin', createdDate: Date(), updatedBy: 'admin', updatedDate: Date() }},
+  { documentId: '#SPQ180705-0008', customer: { name: 'Jaocb', personInCharge: { name: 'Jacob', phone: '019-7524561', email: 'jacob.tan@gmail.com' }}, status: EQuotationStatus.Sent,
+  audit: { createdBy: 'admin', createdDate: Date(), updatedBy: 'admin', updatedDate: Date() }},
+  { documentId: '#SPQ180705-0008', customer: { name: 'Jaocb', personInCharge: { name: 'Jacob', phone: '019-7524561', email: 'jacob.tan@gmail.com' }}, status: EQuotationStatus.Sent,
+  audit: { createdBy: 'admin', createdDate: Date(), updatedBy: 'admin', updatedDate: Date() }},
+  { documentId: '#SPQ180705-0008', customer: { name: 'Jaocb', personInCharge: { name: 'Jacob', phone: '019-7524561', email: 'jacob.tan@gmail.com' }}, status: EQuotationStatus.Sent,
+  audit: { createdBy: 'admin', createdDate: Date(), updatedBy: 'admin', updatedDate: Date() }},
+  { documentId: '#SPQ180705-0008', customer: { name: 'Jaocb', personInCharge: { name: 'Jacob', phone: '019-7524561', email: 'jacob.tan@gmail.com' }}, status: EQuotationStatus.Sent,
+  audit: { createdBy: 'admin', createdDate: Date(), updatedBy: 'admin', updatedDate: Date() }},
+  { documentId: '#SPQ180705-0008', customer: { name: 'Jaocb', personInCharge: { name: 'Jacob', phone: '019-7524561', email: 'jacob.tan@gmail.com' }}, status: EQuotationStatus.Sent,
+  audit: { createdBy: 'admin', createdDate: Date(), updatedBy: 'admin', updatedDate: Date() }},
+];
+
+@Component({
+  selector: 'app-quotation-list',
+  templateUrl: './quotation-list.component.html',
+  styleUrls: ['./quotation-list.component.css']
+})
+export class QuotationListComponent implements OnInit {
+  displayedColumns: string[] = ['selected', 'documentId', 'customer.name', 'customer.personInCharge.name', 'customer.personInCharge.phone', 'customer.personInCharge.email'];
+  dataSource = ELEMENT_DATA;
+  selectedAll = false;
+  icons = {
+    faFile: faFile
+  };
+
+  constructor() {}
+
+  ngOnInit() {
+    _.each(this.dataSource, (item) => item.selected = false);
+  }
+
+  toggleAll() {
+    this.selectedAll = !this.selectedAll;
+    _.each(this.dataSource, (item) => item.selected = this.selectedAll);
+  }
+
+  selectedItem(item, $event) {
+    // update value
+    item.selected = $event.checked;
+    // check is all item is selected ?
+    this.selectedAll = _.every(this.dataSource, { selected: true });
+  }
+}

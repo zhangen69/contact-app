@@ -1,0 +1,8 @@
+.form-group {
+    margin-bottom: 10px;
+}
+
+.form-group > .ng-fa-icon {
+    color: #888;
+    padding: 0 15px;
+}
