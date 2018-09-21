@@ -9,7 +9,10 @@ import { EDialogStatus } from '../enums/EDialogStatus.enum';
 })
 export class ContactComponent implements OnInit {
   dialogStatusOptions: string[] = Object.keys(EDialogStatus).splice(Object.keys(EDialogStatus).length / 2);
-  dialogInfo: any = {};
+  formData: any = {
+    emails: [{}],
+    phones: [{}],
+  };
 
   constructor(public dialogRef: MatDialogRef<ContactComponent>, @Inject(MAT_DIALOG_DATA) public data: any, public snackBar: MatSnackBar) { }
 
@@ -17,13 +20,13 @@ export class ContactComponent implements OnInit {
   }
 
   cancel() {
-    const data = Object.assign({}, this.dialogInfo, { status: EDialogStatus.Cancelled, statusName: this.dialogStatusOptions[EDialogStatus.Cancelled] });
+    const data = Object.assign({}, this.formData, { status: EDialogStatus.Cancelled, statusName: this.dialogStatusOptions[EDialogStatus.Cancelled] });
 
     this.dialogRef.close(data);
   }
 
   submit() {
-    const data = Object.assign({}, this.dialogInfo, { status: EDialogStatus.Succeeeded, statusName: this.dialogStatusOptions[EDialogStatus.Succeeeded] });
+    const data = Object.assign({}, this.formData, { status: EDialogStatus.Succeeeded, statusName: this.dialogStatusOptions[EDialogStatus.Succeeeded] });
 
     this.snackBar.open('Created new contact successfully!', 'Close', { duration: 2000 });
 

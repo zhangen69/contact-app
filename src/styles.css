@@ -11,7 +11,7 @@ body { margin: 0; font-family: 'Roboto', sans-serif; }
 .material-icons.md-24 { font-size: 24px; }
 .material-icons.md-36 { font-size: 36px; }
 .material-icons.md-48 { font-size: 48px; }
-.material-icons[class*="md-"] { height: auto !important; }
+.material-icons[class*="md-"] { height: auto !important; width: auto !important; }
 
 /* Rules for using icons as black on a light background. */
 .material-icons.md-dark { color: rgba(0, 0, 0, 0.54); }

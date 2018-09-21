@@ -1,52 +1,32 @@
-mat-card {
-    padding: 0;
-}
-
-.form {
+.form-group {
     display: flex;
-    flex-direction: row;
+    padding-right: 80px;
+    position: relative;
 }
 
-.icon-group {
-    width: 100px;
-    display: flex;
-    flex-direction: column;
+.form-group .form-field-icon {
+    flex: 0 0 50px;
 }
 
-.icon-group > mat-icon {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 70px;
+.form-field-icon mat-icon {
+    margin-top: 20px;
 }
 
-.icon-group > mat-icon.profile {
-    font-size: 3rem;
-}
-
-.form .row {
+.form-group .form-field-group {
     display: flex;
     flex-wrap: wrap;
-    width: calc(100% - 175px);
+    flex: 0 0 calc(100% - 50px);
 }
 
-.form .row > mat-form-field {
+.form-group mat-form-field {
     flex: 0 0 calc(50% - 10px);
-    margin: 5px;
+    padding: 5px;
 }
 
-.form .row > mat-form-field.w-100 {
-    flex: 0 0 100%;
+.form-group mat-form-field.w-100 {
+    flex: 0 0 calc(100% - 10px);
 }
 
-.icon-btn-group {
-    position: absolute;
-    right: -80px;
-    top: 0;
-}
-
-mat-card-actions {
-    margin: 0;
-    padding: 8px !important;
+.icon-btn {
+    margin-top: 15px;
 }

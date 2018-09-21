@@ -108,6 +108,7 @@ export class AppComponent implements OnInit, OnDestroy {
   openDialog(): void {
     const dialogRef = this.dialog.open(ContactComponent, {
       width: '700px',
+      maxHeight: '700px',
       data: {name: 'this.name', animal: 'this.animal'}
     });
 
