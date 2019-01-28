@@ -1,30 +1,34 @@
 <mat-card class="example-card" color="primary">
   <mat-card-header>
     <!-- <div mat-card-avatar class="example-header-image"></div> -->
-    <mat-card-title>Contacts (470)</mat-card-title>
+    <mat-card-title>Contacts</mat-card-title>
     <!-- <mat-card-subtitle fxHide fxHide.gt-xs="false" fxLayout="row">Dog Breed</mat-card-subtitle> -->
   </mat-card-header>
   <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
   <mat-card-content>
     <mat-list class="contact-list">
       <!-- <h3 mat-subheader>Folders</h3> -->
-      <mat-list-item>
+      <mat-list-item *ngFor="let item of contactListService.list">
         <div class="mat-list-item-content" fxLayout="column" fxLayout.gt-sm="row">
-            <mat-checkbox fxFlex="28px" fxLayoutAlign="start center" fxLayoutAlign.gt-xs="center" color="primary"></mat-checkbox> 
-            <span fxFlex="100" fxFlex.gt-sm="30">Jacob</span>
+            <!-- <mat-checkbox fxFlex="28px" fxLayoutAlign="start center" fxLayoutAlign.gt-xs="center" color="primary" [(ngModel)]="item.selected"></mat-checkbox>  -->
+            <button class="edit-contact-btn" mat-mini-fab color="primary" (click)="editContact(item)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <span fxFlex="100" fxFlex.gt-sm="30">{{ item.firstName }}</span>
             <div class="contact-info-wrapper" fxFlex fxLayout="column" fxLayout.gt-sm="row">
               <span class="contact-info" fxLayoutAlign="start center" fxFlex>
                 <mat-icon class="md-18">smartphone</mat-icon>
-                <span>0197765290</span>
+                <span>{{ item.phone }}</span>
               </span>
               <span class="contact-info" fxLayoutAlign="start center" fxFlex>
                 <mat-icon class="md-18">email</mat-icon>
-                <span>zhangen69@gmail.com</span>
+                <span>{{ item.email }}</span>
               </span>
             </div>
         </div>
       </mat-list-item>
     </mat-list>
+    <p [fxShow]="contactListService.list.length === 0">No Contact Found.</p>
   </mat-card-content>
   <!-- <mat-card-actions>
   </mat-card-actions> -->

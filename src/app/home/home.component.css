@@ -20,3 +20,8 @@
 .contact-info-wrapper > .contact-info > mat-icon {
     margin-right: 5px;
 }
+
+.edit-contact-btn {
+    position: absolute;
+    left: -30px;
+}

@@ -8,6 +8,7 @@ import { NavigationDialogComponent } from './templates/navigation-dialog/navigat
 import { LoadingPageService } from './services/loading-page/loading-page.service';
 import { PageHistoryService } from './services/page-history/page-history.service';
 import { ContactComponent } from './contact/contact.component';
+import { ContactListService } from './services/contact-list.service';
 
 @Component({
   selector: 'app-root',
@@ -24,12 +25,12 @@ export class AppComponent implements OnInit, OnDestroy {
   // mock data => route settings
   links = [
     { displayName: 'Contacts', icon: 'contacts', route: '/home', nestedLinks: [] },
-    { displayName: 'Groups', icon: 'group', route: '/groups', nestedLinks: []},
-    { displayName: 'Labels', icon: 'label', route: '/labels', nestedLinks: []},
+    // { displayName: 'Groups', icon: 'group', route: '/groups', nestedLinks: []},
+    // { displayName: 'Labels', icon: 'label', route: '/labels', nestedLinks: []},
   ];
 
   // tslint:disable-next-line:max-line-length
-  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher, public router: Router, public breakpointObserver: BreakpointObserver, public loadingPageService: LoadingPageService, private pageHistoryService: PageHistoryService, public dialog: MatDialog) {}
+  constructor(changeDetectorRef: ChangeDetectorRef, media: MediaMatcher, public router: Router, public breakpointObserver: BreakpointObserver, public loadingPageService: LoadingPageService, private pageHistoryService: PageHistoryService, public dialog: MatDialog, private contactListService: ContactListService) {}
 
   ngOnInit() {
     this.loadingPageService.refresh();
@@ -109,12 +110,13 @@ export class AppComponent implements OnInit, OnDestroy {
     const dialogRef = this.dialog.open(ContactComponent, {
       width: '700px',
       maxHeight: '700px',
-      data: {name: 'this.name', animal: 'this.animal'}
+      data: null
     });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
       console.log(result);
+      this.contactListService.getContact();
     });
   }
 }

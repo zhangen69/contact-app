@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
+import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -27,6 +27,7 @@ import { PageHistoryService } from './services/page-history/page-history.service
 import { DynamicFormComponent, QuestionControlService } from './dynamic-form/dynamic-form.component';
 import { DynamicFormFieldComponent } from './dynamic-form-field/dynamic-form-field.component';
 import { ContactComponent } from './contact/contact.component';
+import { ContactListService } from './services/contact-list.service';
 
 // Add an icon to the library for convenient access in other components
 library.add(fas, far, fab);
@@ -49,6 +50,7 @@ library.add(fas, far, fab);
    ],
    imports: [
       BrowserModule,
+      HttpClientModule,
       AppRoutingModule,
       BrowserAnimationsModule,
       MaterialModule,
@@ -62,7 +64,8 @@ library.add(fas, far, fab);
       LoadingPageService,
       PageHistoryService,
       QuestionControlService,
-      QuestionService
+      QuestionService,
+      ContactListService
    ],
    bootstrap: [
       AppComponent

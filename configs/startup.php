@@ -4,7 +4,7 @@
     {
         if (!isset($value))
         {
-            throw new InvalidArgumentException('value cannot be empty');
+            return '';
         }
         else
         {
